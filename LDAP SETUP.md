@@ -212,7 +212,7 @@ ldapadd -a -c -xH ldap://localhost:3389 -D "cn=Directory Manager" -W  -f group.
 a. First check how many default object class created
 
 ```bash
-**ldapsearch -o ldif-wrap=no -xH ldap://localhost:3389 -D "cn=Directory Manager" -w "redhat@" -b "cn=schema" '(objectClass=subSchema)' -s sub objectclasses**
+ldapsearch -o ldif-wrap=no -xH ldap://localhost:3389 -D "cn=Directory Manager" -w "redhat@" -b "cn=schema" '(objectClass=subSchema)' -s sub objectclasses
 ```
 
 - **ldapsearch:** This command is used to search and retrieve information from an LDAP directory server.
@@ -282,7 +282,7 @@ ldadadd -a -c -xH ldap://localhost:3389 -D "cn=Directory Manager" -W  -f <object
 **7. Create user with custom attribute**
 
 ```bash
-cat  **custom_attribute.ldif**
+cat  custom_attribute.ldif
 ```
 
 ```bash
