@@ -44,7 +44,7 @@ Apache Directory Studio version:- 2.0.0.v20210717-M17
 
 ## command for the setup or configuration
 
-1. Create Bash script for create Pod and container
+**1. Create Bash script for create Pod and container**
 
 cat  ldap.sh
 
@@ -105,12 +105,12 @@ sudo apt install ldap-utils
 - **install:** This is an argument passed to the apt command, indicating that you want to install a package.
 - **ldap-utils:** This is a collection of command-line utilities for interacting with LDAP (Lightweight Directory Access Protocol) servers. These utilities are useful for managing and querying directory services.
 
-2.  Setup ApacheDirectory studio for ldap db UI  
+  
 
+**2.  Setup ApacheDirectory studio for ldap db UI**
 
-     a.Install [ApacheDirectory studio tar](https://directory.apache.org/studio/download/download-linux.html) file and extract in directory
-     
-     b.Go to new connection and enter some details
+ a. Install [ApacheDirectory studio tar](https://directory.apache.org/studio/download/download-linux.html) file and extract in directory  
+ b. Go to new connection and enter some details
 
 ```bash
 ldap connection name
@@ -120,7 +120,8 @@ Enter Bind DN name (cn= Directory Manager)
 Enter Bind DN password -> finish
 ```
 
-3.Create Organization_unit ldif file (file extension name , ldif )
+
+**3.Create Organization_unit ldif file (file extension name , ldif )**
 
 ```bash
 cat  organisation.ldif
@@ -175,8 +176,8 @@ ldapadd -a -c -xH ldap://localhost:3389 -D "cn=Directory Manager" -W  -f organis
 - **W:** This option prompts you to enter the password for the Bind DN interactively after providing the -D option. It's safer than putting the password in the command line itself.
 - **f organisation.ldif**: This option specifies the name of the LDIF (LDAP Data Interchange Format) file that contains the data to be added to the LDAP server. The **f** option is followed by the filename **(organisation.ldif** in this case).
 
-4.  Create 2 group inside Support
 
+**4.  Create 2 group inside Support**
 ```bash
 cat  group.ldif
 ```
@@ -203,6 +204,8 @@ ldapadd -a -c -xH ldap://localhost:3389 -D "cn=Directory Manager" -W  -f group.
 
 - **W:** This option prompts you to enter the password for the Bind DN interactively after providing the **D** option. It's safer than putting the password in the command line itself.
 - **f group.ldif:** This option specifies the name of the LDIF (LDAP Data Interchange Format) file that contains the data to be added to the LDAP server. The **f** option is followed by the filename (**group.ldif** in this case).
+
+
 
 **5. Run some Command of ldap**
 
@@ -233,7 +236,7 @@ ldapsearch -o ldif-wrap=no -xH ldap://localhost:3389 -D "cn=Directory Manager" -
 - **'(objectClass=subSchema)'**: This is the search filter. It specifies that the search should retrieve entries with the **objectClass** attribute equal to **subSchema.** This filter targets the schema definition entries.
 - **attributetypes:** This is the attribute(s)we  want to retrieve from the entries that match the search filter. In this case, we 're requesting the **attributetypes** attribute.
 
-6. Create Custom attribute according to our requirement
+**6. Create Custom attribute according to our requirement**
 
  a. Create customer attribute ldif file
 
@@ -382,7 +385,7 @@ result: 0 Success
 # numResponses: 2
 ```
 
-8. Setup **ldap Client** on another VM
+**8. Setup **ldap Client** on another VM**
 
 b. Install package related to ldap client
 
