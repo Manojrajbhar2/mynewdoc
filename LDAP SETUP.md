@@ -110,13 +110,13 @@ sudo apt install ldap-utils
 **2.  Setup ApacheDirectory studio for ldap db UI**
 
  a. Install [ApacheDirectory studio tar](https://directory.apache.org/studio/download/download-linux.html) file and extract in directory  
- b. open apache directory
+ b. open apache directory  
  c. Go to new connection and enter some details
 
 ```bash
 ldap connection name
-Hostname
-ldap port > Press next 
+Hostname -> localhost
+ldap port > Press next (3389)
 Enter Bind DN name (cn= Directory Manager) 
 Enter Bind DN password -> finish
 ```
