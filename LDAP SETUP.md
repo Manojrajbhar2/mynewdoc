@@ -94,7 +94,7 @@ a. Check container list
 podman ps -a --pod
 ```
 
-b. Install Ldap utility on bash machine
+b. Install Ldap utility on bash machine for runn ldap command
 
 ```bash
 sudo apt install ldap-utils
