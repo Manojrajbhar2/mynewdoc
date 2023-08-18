@@ -241,6 +241,8 @@ ldapsearch -o ldif-wrap=no -xH ldap://localhost:3389 -D "cn=Directory Manager" -
 
  a. Create customer attribute ldif file
 
+ cat  custom_attribute.ldif
+
     Example:-
 
 ```bash
