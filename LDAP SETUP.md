@@ -197,7 +197,7 @@ cn: SupportTeam
 uniqueMember: uid=user2,ou=Support,dc=keenable,dc=in
 ```
 
-Run this command to add **organisation.ldif**
+Run this command to add **group.ldif**
 
 ```bash
 ldapadd -a -c -xH ldap://localhost:3389 -D "cn=Directory Manager" -W  -f group.ldif
@@ -241,9 +241,8 @@ ldapsearch -o ldif-wrap=no -xH ldap://localhost:3389 -D "cn=Directory Manager" -
 
  a. Create customer attribute ldif file
 
- cat  custom_attribute.ldif
+     cat  custom_attribute.ldif
 
-    Example:-
 
 ```bash
 dn: cn=schema
@@ -261,10 +260,14 @@ attributetypes: (correspondence_address-oid  NAME 'CorrespondenceAddress' DESC '
 b. Add this file to ldap db
 
 ```bash
-ldadadd -a -c -xH ldap://localhost:3389 -D "cn=Directory Manager" -W  -f < attribute file>
+ldadadd -a -c -xH ldap://localhost:3389 -D "cn=Directory Manager" -W  -f custom_attribute.ldif
 ```
 
 c. Create Object class file for add attribute to object class
+
+```bash
+cat  object_class.ldif
+```
 
 ```bash
 dn: cn=schema
@@ -276,16 +279,16 @@ objectClasses: ( customEmployee-oid NAME 'customEmployee' SUP top STRUCTURAL MUS
 d. Add object class ldif file
 
 ```bash
-ldadadd -a -c -xH ldap://localhost:3389 -D "cn=Directory Manager" -W  -f <objectclass name>
+ldadadd -a -c -xH ldap://localhost:3389 -D "cn=Directory Manager" -W  -f object_class.ldif
 
 ```
 
-- **f <objectclass name>:** This option specifies the name of the LDIF (LDAP Data Interchange Format) file that contains the data to be added to the LDAP server. The -f option is followed by the filename, where **<objectclass name>** should be replaced with the actual name of the LDIF file that defines the object class we want to add.
+- **f object_class.ldif:** This option specifies the name of the LDIF (LDAP Data Interchange Format) file that contains the data to be added to the LDAP server. The -f option denotes the filename
 
 **7. Create user with custom attribute**
 
 ```bash
-cat  custom_attribute.ldif
+cat user1.ldif
 ```
 
 ```bash
@@ -322,10 +325,10 @@ IFSCCode: KKBK0053
 a. After that add user to db
 
 ```bash
-ldapadd -a -c -xH ldap://localhost:3389 -D "cn=Directory Manager" -W  -f custom_attribute.ldif
+ldapadd -a -c -xH ldap://localhost:3389 -D "cn=Directory Manager" -W  -f user1.ldif
 ```
 
-- **f custom_attribute.ldif:** This option specifies the name of the LDIF (LDAP Data Interchange Format) file that contains the data to be added to the LDAP server. The -f option is followed by the filename (**custom_attribute.ldif** in this case).
+- **f user1.ldif:** This option specifies the name of the LDIF (LDAP Data Interchange Format) file that contains the data to be added to the LDAP server. The -f option is followed by the filename (**user1.ldif** in this case).
 
 b.Check user reflected or not through ldapsearch command
 
@@ -417,6 +420,9 @@ base dc =,dc=  # acc to server base Dn
 ```
 
 d. Restart nslcd and nscd service 
+```
+sudo systemctl restart nslcd
+```
 
 **nslcd** stands for Name Service LDAP Client Daemon. It is responsible for querying LDAP directories (such as OpenLDAP) for user and group information and providing it to local processes and services.
 
