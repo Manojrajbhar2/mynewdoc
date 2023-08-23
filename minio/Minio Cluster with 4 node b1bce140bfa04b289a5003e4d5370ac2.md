@@ -147,13 +147,6 @@ harsh@harsh:~$ curl -v localhost:8080/.prometheus/metrics
 
 - Prometheus is a monitoring and alerting toolkit often used for collecting and analyzing metrics from various services.
 
-**Test cases list**
-
-| SNO | Component/Tool Name | Test case | Test Count | Test Cases | Expected Result | Test Passed [PASS/FAIL] | Remarks |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-
-Note : NA
-
 **Reference link**
 
 [https://github.com/minio/sidekick](https://github.com/minio/sidekick)
