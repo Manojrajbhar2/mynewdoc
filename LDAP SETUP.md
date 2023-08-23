@@ -165,7 +165,7 @@ ou: Observability
  Run this command to add **organisation.ldif**
 
 ```bash
-ldapadd -a -c -xH ldap://localhost:3389 -D "cn=Directory Manager" -W  -f organisation.ldif
+ldapadd -a -c -x -H ldap://localhost:3389 -D "cn=Directory Manager" -W  -f organisation.ldif
 ```
 
 - **ldapadd:** This command is used to add new entries to an LDAP directory server.
@@ -213,7 +213,7 @@ ldapadd -a -c -xH ldap://localhost:3389 -D "cn=Directory Manager" -W  -f group.
 a. First check how many default object class created
 
 ```bash
-ldapsearch -o ldif-wrap=no -xH ldap://localhost:3389 -D "cn=Directory Manager" -w "redhat@" -b "cn=schema" '(objectClass=subSchema)' -s sub objectclasses
+ldapsearch -o ldif-wrap=no -x -H ldap://localhost:3389 -D "cn=Directory Manager" -w "redhat@" -b "cn=schema" '(objectClass=subSchema)' -s sub objectclasses
 ```
 
 - **ldapsearch:** This command is used to search and retrieve information from an LDAP directory server.
@@ -228,7 +228,7 @@ ldapsearch -o ldif-wrap=no -xH ldap://localhost:3389 -D "cn=Directory Manager" -
 a. Check how many default attributes created
 
 ```bash
-ldapsearch -o ldif-wrap=no -xH ldap://localhost:3389 -D "cn=Directory Manager" -w "redhat@" -b "cn=schema" '(objectClass=subSchema)' -s sub attributetypes
+ldapsearch -o ldif-wrap=no -x -H ldap://localhost:3389 -D "cn=Directory Manager" -w "redhat@" -b "cn=schema" '(objectClass=subSchema)' -s sub attributetypes
 ```
 
 - **o ldif-wrap=no:** This option turns off LDIF (LDAP Data Interchange Format) line wrapping. It ensures that the output LDIF is not formatted with line breaks, which can be useful for processing the output programmatically.
@@ -260,7 +260,7 @@ attributetypes: (correspondence_address-oid  NAME 'CorrespondenceAddress' DESC '
 b. Add this file to ldap db
 
 ```bash
-ldadadd -a -c -xH ldap://localhost:3389 -D "cn=Directory Manager" -W  -f custom_attribute.ldif
+ldadadd -a -c -x -H ldap://localhost:3389 -D "cn=Directory Manager" -W  -f custom_attribute.ldif
 ```
 
 c. Create Object class file for add attribute to object class
@@ -279,7 +279,7 @@ objectClasses: ( customEmployee-oid NAME 'customEmployee' SUP top STRUCTURAL MUS
 d. Add object class ldif file
 
 ```bash
-ldadadd -a -c -xH ldap://localhost:3389 -D "cn=Directory Manager" -W  -f object_class.ldif
+ldapadd -a -c -x -H ldap://localhost:3389 -D "cn=Directory Manager" -W  -f object_class.ldif
 
 ```
 
@@ -325,7 +325,7 @@ IFSCCode: KKBK0053
 a. After that add user to db
 
 ```bash
-ldapadd -a -c -xH ldap://localhost:3389 -D "cn=Directory Manager" -W  -f user1.ldif
+ldapadd -a -c -x -H ldap://localhost:3389 -D "cn=Directory Manager" -W  -f user1.ldif
 ```
 
 - **f user1.ldif:** This option specifies the name of the LDIF (LDAP Data Interchange Format) file that contains the data to be added to the LDAP server. The -f option is followed by the filename (**user1.ldif** in this case).
