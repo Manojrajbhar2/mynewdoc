@@ -75,7 +75,7 @@ Add the below commands for sidekick MiniIO.
 - **-health-path=/minio/health/ready**: This specifies the health check endpoint path that the MinIO Sidekick will use to monitor the MinIO instances' readiness.
 - -**address :8080**: This specifies that the MinIO Sidekick's web interface should listen on port 8080.
     
-    ![Minio%20Cluster%20with%204%20node%20b1bce140bfa04b289a5003e4d5370ac2/image1.png](Minio%20Cluster%20with%204%20node%20b1bce140bfa04b289a5003e4d5370ac2/image1.png)
+    ![Minio%20Cluster%20with%204%20node%20b1bce140bfa04b289a5003e4d5370ac2/image1.png] (Minio%20Cluster%20with%204%20node%20b1bce140bfa04b289a5003e4d5370ac2/image1.png)
     
 
 Here first, we have to download mc command on client machine and  then we have to set alias for them,
