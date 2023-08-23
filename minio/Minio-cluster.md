@@ -77,6 +77,17 @@ docker run -itd --name minio4 --net=host -e MINIO_ROOT_PASSWORD=redhat1234 -e MI
 
 - **http://minio{1..4}/data**: This seems to be indicating a distributed setup with multiple MinIO instances (minio1, minio2, minio3, minio4) and using **/data** as the data directory.
 
+
+
+
+
+
+
+
+**Sidekick** constantly monitors the MinIO servers for availability using the readiness service API. For legacy applications, it will fallback to port-reachability for readiness checks.If any of the MinIO servers go down, Sidekick will automatically reroute the S3 requests to other servers until the failed server comes back online.
+
+
+
 Add the below commands for sidekick MiniIO.
 
 
@@ -85,6 +96,7 @@ Add the below commands for sidekick MiniIO.
 ```bash
   podman run -itd --name sidekick -p 8080:8080  [docker.io/minio/sidekick](http://docker.io/minio/sidekick)--health-path=/minio/health/ready --address :8080 [http://minio](http://minio/){1...4}:9000
 ```
+
 
 
 - **-name sidekick**: This assigns the name "sidekick" to the container.
