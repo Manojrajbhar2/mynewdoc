@@ -51,8 +51,10 @@ docker run -itd --name minio4 --net=host -e MINIO_ROOT_PASSWORD=redhat1234 -e MI
 - **docker run**: This is the command used to create and start a new Docker container.
 
 - **itd:** These are flags that determine how the container is run:
-    - **i**: This flag tells the container to keep the standard input (stdin) open. It's commonly used when you want to interact with the container, like running an interactive shell inside it..
-    - **t**: Allocate a pseudo-TTY (terminal).
+    - **i**: This flag tells the container to keep the standard input (stdin) open. It's commonly used when you want to interact with the container, like running an interactive shell inside it.
+      
+    - **t**: This flag allocates a pseudo-TTY (terminal) for the container. It simulates a terminal environment, which is useful for running commands that require terminal-like behavior, such as command-line prompts.
+      
     - **d:** Run the container in detached mode (background).
 
 - **-name minio1**: This assigns the name "minio1" to the Docker container.
