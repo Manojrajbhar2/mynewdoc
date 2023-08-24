@@ -69,7 +69,7 @@ docker run -itd --name minio4 --net=host -e MINIO_ROOT_PASSWORD=redhat1234 -e MI
     - **p 9000:9000**: Map port 9000 on the host to port 9000 in the container. This is the default port for MinIO operations.
     - **p 9090:9090**: Map port 9090 on the host to port 9090 in the container. This is used for the MinIO console.
 
-- **v /mnt/disk1:/data**: This mounts the directory **/mnt/disk1** on the host to the **/data** directory within the container. This can be used to persistently store MinIO data.
+- **-v /mnt/disk1:/data**: This mounts the directory **/mnt/disk1** on the host to the **/data** directory within the container. This can be used to persistently store MinIO data.
 
 - **docker.io/minio/minio**: This specifies the Docker image to use, which is the official MinIO server image from Docker Hub.
 
