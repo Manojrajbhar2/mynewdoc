@@ -44,7 +44,7 @@ podman pod create --name crunchy-postgres --publish 9090:9090 --publish 9187:918
 **2. Create Postgres container:**
 
 ```bash
-podman run -d --pod crunchy-postgres --name postgres_crunchy -e "POSTGRES_DB=postgres" -e "POSTGRES_USER=postgres" -e "POSTGRES_PASSWORD=redhat" -v /home/yogendra/shiksha_portal/crunchy/postgres/data:/var/lib/postgresql/data docker.io/postgres:12
+podman run -d --pod crunchy-postgres --name postgres_crunchy -e "POSTGRES_DB=postgres" -e "POSTGRES_USER=postgres" -e "POSTGRES_PASSWORD=redhat" -v /home/manoj/shiksha_portal/crunchy/postgres/data:/var/lib/postgresql/data docker.io/postgres:12
 ```
 
 - **-d**: This flag indicates that the container should run in detached mode (in the background).
@@ -53,7 +53,7 @@ podman run -d --pod crunchy-postgres --name postgres_crunchy -e "POSTGRES_DB=pos
 - **-e "POSTGRES_DB=postgres"**: This flag sets the environment variable **POSTGRES_DB** within the container to "postgres",
 - **-e "POSTGRES_USER=postgres"**: This flag sets the environment variable **POSTGRES_USER** within the container to "postgres",It indicate the username.
 - **-e "POSTGRES_PASSWORD=redhat"**: This flag sets the environment variable **POSTGRES_PASSWORD** within the container to "redhat", which is the password for the PostgreSQL user.
-- **-v /home/yogendra/shiksha_portal/crunchy/postgres/data:/var/lib/postgresql/data**: This allows you to persist the PostgreSQL data outside the container, ensuring that the data is retained even if the container is removed.
+- **-v /home/manoj/shiksha_portal/crunchy/postgres/data:/var/lib/postgresql/data**: This allows you to persist the PostgreSQL data outside the container, ensuring that the data is retained even if the container is removed.
 - **docker.io/postgres:12**: This specifies the Docker image to use for the container. the container will be based on the "postgres:12" image from Docker Hub.
 
 **3. Do Changes in configuration file:**
