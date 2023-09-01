@@ -67,11 +67,30 @@ echo "shared_preload_libraries = 'pg_stat_statements,auto_explain'" >> postgresq
 ```
 
 **4. Pull crunchy-postgres-exporter image:**
+Error faced when pulling this image without redhat credentials
+```bash
+manoj@keen:~$ podman pull registry.connect.redhat.com/crunchydata/crunchy-postgres-exporter:latest
+Trying to pull registry.connect.redhat.com/crunchydata/crunchy-postgres-exporter:latest...
+Error: initializing source docker://registry.connect.redhat.com/crunchydata/crunchy-postgres-exporter:latest: unable to retrieve auth token: invalid username/password: unauthorized: Please login to the Red Hat Registry using your Customer Portal credentials. Further instructions can be found here: https://access.redhat.com/RegistryAuthentication
 
-You have redhat user id and password otherwise it will show error during pulling this image.
+```
+
+**NOTE**:- Redhat Credentials are required for pulling this image.
+Steps to resolved 
+1st login in redhat registry then pull the image
 
 ```bash
-podman pull registry.connect.redhat.com/crunchydata/crunchy-postgres-exporter:latest
+podman login registry.connect.redhat.com -u manoj@fosteringlinux.com  -p 123455 
+Login Succeeded!
+```
+```bash
+podman pull registry.connect.redhat.com/crunchydata/crunchy-postgres-exporter:latest                                
+Trying to pull registry.connect.redhat.com/crunchydata/crunchy-postgres-exporter:latest
+Getting image source signatures
+Copying blob 07e9ce81867b done  
+Copying blob 3a0c43549655 done  
+Writing manifest to image destination
+Storing signatures
 ```
 
 **5. Create a demo container of crunchy for setup.sql.**
