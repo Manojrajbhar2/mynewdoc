@@ -1,4 +1,4 @@
-# Crunchy-Postgres-Exporter
+## Crunchy-Postgres-Exporter
 
 **Crunchy-Postgres-Exporter**
 
@@ -33,7 +33,7 @@ The **crunchy-postgres-exporter** container provides real time metrics about the
 1. Create Pod:
 
 ```bash
-**podman pod create --name crunchy-postgres --publish 9090:9090 --publish 9187:9187 --publish 5432:5432 --publish 3000:3000**
+podman pod create --name crunchy-postgres --publish 9090:9090 --publish 9187:9187 --publish 5432:5432 --publish 3000:3000
 ```
 
 - **podman pod create**: This command is used to create a new pod, which is a group of containers that share the same network namespace. Containers within a pod can communicate with each other using the loopback interface .
@@ -46,7 +46,7 @@ The **crunchy-postgres-exporter** container provides real time metrics about the
 2. Create Postgres container:
 
 ```bash
-**podman run -d --pod crunchy-postgres --name postgres_crunchy -e "POSTGRES_DB=postgres" -e "POSTGRES_USER=postgres" -e "POSTGRES_PASSWORD=redhat" -v /home/yogendra/shiksha_portal/crunchy/postgres/data:/var/lib/postgresql/data docker.io/postgres:12**
+podman run -d --pod crunchy-postgres --name postgres_crunchy -e "POSTGRES_DB=postgres" -e "POSTGRES_USER=postgres" -e "POSTGRES_PASSWORD=redhat" -v /home/yogendra/shiksha_portal/crunchy/postgres/data:/var/lib/postgresql/data docker.io/postgres:12
 ```
 
 - **d**: This flag indicates that the container should run in detached mode (in the background).
@@ -65,7 +65,7 @@ WE will need to modify our postgresql.conf configuration file to tell PostgreSQL
 shared libraries.
 
 ```bash
-**echo "shared_preload_libraries = 'pg_stat_statements,auto_explain'" >> postgresql.conf**
+echo "shared_preload_libraries = 'pg_stat_statements,auto_explain'" >> postgresql.conf
 ```
 
 4. Pull crunchy-postgres-exporter image:
@@ -73,40 +73,38 @@ shared libraries.
 You have redhat user id and password otherwise it will show error during pulling this image.
 
 ```bash
-**podman pull registry.connect.redhat.com/crunchydata/crunchy-postgres-exporter:latest**
+podman pull registry.connect.redhat.com/crunchydata/crunchy-postgres-exporter:latest
 ```
 
 5. Create a demo container of crunchy for setup.sql.
 
 ```bash
-**podman run -itd --pod crunchy-postgres --name crunchy -e
-EXPORTER_PG_PASSWORD=redhat 615904c619c5**
+podman run -itd --pod crunchy-postgres --name crunchy -e EXPORTER_PG_PASSWORD=redhat 615904c619c5
 ```
 
 6. Get the setup.sql from /opt/cpm/conf/pgxx/setup.sql from the crunchy container according to your postgres version.
 
 ```bash
-**podman cp crunchy:/opt/cpm/conf/pg12/setup.sql .**
+podman cp crunchy:/opt/cpm/conf/pg12/setup.sql .
 ```
 
 NOTE:- **setu.sql** Creates **ccp_monitoring** role with all necessary grants. Creates all necessary database objects (functions, tables, etc) required for monitoring.
 
 This will copy the **setup.sql** file from the container to the directory where you executed the command.
 
-**NOTE:- Dont miss the ( . ) which is taking place after setup.sql because it represent copy in your current directory.**
-
+**NOTE**:- Dont miss the ( . ) which is taking place after setup.sql because it represent copy in your current directory.
 7. Remove the test container of crunchy:
 
 ```bash
-**podman rm -f crunchy**
+podman rm -f crunchy
 ```
 
 8. Push setup.sql in postgres database:
 
-# Get the setup.sql from /opt/cpm/conf/pg12/setup.sql from the exporter container.
+ Get the **setup.sql** from **/opt/cpm/conf/pg12/setup.sql** from the exporter container.
 
 ```bash
- **psql -h 127.0.0.1 -U postgres -d template1 < setup.sql**
+ psql -h 127.0.0.1 -U postgres -d template1 < setup.sql
 ```
 
 This command is used to execute SQL commands from the setup.sql file within a PostgreSQL database, making changes to the database schema, data, or settings as specified in the SQL file.
@@ -114,7 +112,7 @@ This command is used to execute SQL commands from the setup.sql file within a Po
 9. Create Extension:
 
 ```bash
-**psql -h 127.0.0.1 -U postgres -d template1 -c "CREATE EXTENSION pg_stat_statements;"**
+psql -h 127.0.0.1 -U postgres -d template1 -c "CREATE EXTENSION pg_stat_statements;"
 ```
 
 This command is used to enable the **pg_stat_statements** extension in the PostgreSQL database, allowing you to collect statistics about executed SQL statements for performance analysis.
@@ -122,26 +120,23 @@ This command is used to enable the **pg_stat_statements** extension in the Postg
 10. Create password for user ccp_monitoring:
 
 ```bash
-**root@crunchy-postgres:/var/lib/postgresql# psql -h 127.0.0.1 -U postgres -d postgres**
+root@crunchy-postgres:/var/lib/postgresql# psql -h 127.0.0.1 -U postgres -d postgres
 ```
 
-**Here We will login in postgres database and then Create password for user ccp_monitoring and also will create database name yogendra**
+Here We will login in postgres database and then Create password for user ccp_monitoring and also will create database name yogendra
 
 ```bash
-postgres=# **\password ccp_monitoring**
+postgres=# \password ccp_monitoring
 Enter new password for user "ccp_monitoring":
 Enter it again:
-postgres=# **create database yogendra;**
+postgres=# create database yogendra;
 CREATE DATABASE
 ```
 
 11. Now create crunchy-postgres-exporter container:
 
 ```bash
-**podman run -itd --pod crunchy-postgres --name crunchy -e
-EXPORTER_PG_PASSWORD=redhat -e EXPORTER_PG_HOST=127.0.0.1 -e
-EXPORTER_PG_USER=ccp_monitoring -e
-DATA_SOURCE_NAME=postgresql://ccp_monitoring:redhat@127.0.0.1:5432/yogendra?sslmode=disable 615904c619c5**
+podman run -itd --pod crunchy-postgres --name crunchy -e EXPORTER_PG_PASSWORD=redhat -e EXPORTER_PG_HOST=127.0.0.1 -e EXPORTER_PG_USER=ccp_monitoring -e DATA_SOURCE_NAME=postgresql://ccp_monitoring:redhat@127.0.0.1:5432/yogendra?sslmode=disable 615904c619c5
 ```
 
 - **podman run**: This command is used to run a new container.
@@ -157,12 +152,11 @@ DATA_SOURCE_NAME=postgresql://ccp_monitoring:redhat@127.0.0.1:5432/yogendra?sslm
 12. Check metrics:
 
 ```bash
-**curl localhost:9187/metrics | grep query**
+curl localhost:9187/metrics | grep query
 ```
+![](image3.png)
 
-![Crunchy-Postgres-Exporter%208b1fb0db5d814d75bcccce296b0dc7d8/image3.png](Crunchy-Postgres-Exporter%208b1fb0db5d814d75bcccce296b0dc7d8/image3.png)
-
-- ***curl* is a command-line tool to transfer data to or from a server**
+- **curl** is a command-line tool to transfer data to or from a server
 - **grep query**: This part of the command uses the **grep** command to search for lines in the input that contain the word "query". This is used to filter the metrics output to only show lines related to queries.
 
 13. Create prometheus container:
@@ -172,14 +166,12 @@ DATA_SOURCE_NAME=postgresql://ccp_monitoring:redhat@127.0.0.1:5432/yogendra?sslm
 ```
 
 Set the target in prometheus.yml file to get metrics in prometheus
+![](image2.png)
 
-![Crunchy-Postgres-Exporter%208b1fb0db5d814d75bcccce296b0dc7d8/image2.png](Crunchy-Postgres-Exporter%208b1fb0db5d814d75bcccce296b0dc7d8/image2.png)
+hit on browser: **http://localhost:9090/**
 
-hit on browser: **http://localhost:9091/**
-
-![Crunchy-Postgres-Exporter%208b1fb0db5d814d75bcccce296b0dc7d8/image5.png](Crunchy-Postgres-Exporter%208b1fb0db5d814d75bcccce296b0dc7d8/image5.png)
-
-![Crunchy-Postgres-Exporter%208b1fb0db5d814d75bcccce296b0dc7d8/image4.png](Crunchy-Postgres-Exporter%208b1fb0db5d814d75bcccce296b0dc7d8/image4.png)
+![](image5.png)
+![](image4.png)
 
 14. Create Grafana Container:
 
@@ -196,7 +188,7 @@ Select the prometheus as a datasource and import the dashboard.
 
 **9628**
 
-![Crunchy-Postgres-Exporter%208b1fb0db5d814d75bcccce296b0dc7d8/image1.png](Crunchy-Postgres-Exporter%208b1fb0db5d814d75bcccce296b0dc7d8/image1.png)
+![](image1.png)
 
 **Test cases list**
 
