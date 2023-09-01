@@ -90,7 +90,8 @@ NOTE:- **setu.sql** Creates **ccp_monitoring** role with all necessary grants. C
 
 This will copy the **setup.sql** file from the container to the directory where you executed the command.
 
-**NOTE**:- Dont miss the ( . ) which is taking place after setup.sql because it represent copy in your current directory.
+**NOTE**:- Dont miss the ( . ) which is taking place after setup.sql because it represent copy in your current directory.  
+
 **7. Remove the test container of crunchy:**
 
 ```bash
@@ -160,7 +161,7 @@ curl localhost:9187/metrics | grep query
 **13. Create prometheus container:**
 
 ```bash
-**podman run -itd --pod crunchy-postgres --name prometheus_crunchy -v /home/yogendra/shiksha_portal/prometheus_crunchy/prometheus.yml:/etc/pro metheus/prometheus.yml docker.io/prom/prometheus**
+podman run -itd --pod crunchy-postgres --name prometheus_crunchy -v /home/yogendra/shiksha_portal/prometheus_crunchy/prometheus.yml:/etc/pro metheus/prometheus.yml docker.io/prom/prometheus
 ```
 
 Set the target in prometheus.yml file to get metrics in prometheus
