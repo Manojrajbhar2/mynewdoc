@@ -35,11 +35,11 @@ podman pod create --name crunchy-postgres --publish 9090:9090 --publish 9187:918
 ```
 
 - **podman pod create**: This command is used to create a new pod, which is a group of containers that share the same network namespace. Containers within a pod can communicate with each other using the loopback interface .
-- **-name crunchy-postgres**: the pod will be named "crunchy-postgres".
-- **-publish 9090:9090**: This flag maps port 9090 from the host to port 9090 within the pod. Port 9090 is commonly used for services like Prometheus.
-- **-publish 9187:9187**: This flag maps port 9187 from the host to port 9187 within the pod. Port 9187 is the default port for the PostgreSQL Exporter, which exposes PostgreSQL performance metrics.
-- **-publish 5432:5432**: This flag maps port 5432 from the host to port 5432 within the pod. Port 5432 is the default port for PostgreSQL database connections.
-- **-publish 3000:3000**: This flag maps port 3000 from the host to port 3000 within the pod. Port 3000 is commonly used for Grafana.
+- **--name crunchy-postgres**: the pod will be named "crunchy-postgres".
+- **--publish 9090:9090**: This flag maps port 9090 from the host to port 9090 within the pod. Port 9090 is commonly used for services like Prometheus.
+- **--publish 9187:9187**: This flag maps port 9187 from the host to port 9187 within the pod. Port 9187 is the default port for the PostgreSQL Exporter, which exposes PostgreSQL performance metrics.
+- **--publish 5432:5432**: This flag maps port 5432 from the host to port 5432 within the pod. Port 5432 is the default port for PostgreSQL database connections.
+- **--publish 3000:3000**: This flag maps port 3000 from the host to port 3000 within the pod. Port 3000 is commonly used for Grafana.
 
 **2. Create Postgres container:**
 
@@ -47,13 +47,13 @@ podman pod create --name crunchy-postgres --publish 9090:9090 --publish 9187:918
 podman run -d --pod crunchy-postgres --name postgres_crunchy -e "POSTGRES_DB=postgres" -e "POSTGRES_USER=postgres" -e "POSTGRES_PASSWORD=redhat" -v /home/yogendra/shiksha_portal/crunchy/postgres/data:/var/lib/postgresql/data docker.io/postgres:12
 ```
 
-- **d**: This flag indicates that the container should run in detached mode (in the background).
+- **-d**: This flag indicates that the container should run in detached mode (in the background).
 - **-pod crunchy-postgres**: This flag specifies that the container should be part of the existing "crunchy-postgres" pod.
-- **-name postgres_crunchy**: This flag assigns the name "postgres_crunchy" to the container.
-- **e "POSTGRES_DB=postgres"**: This flag sets the environment variable **POSTGRES_DB** within the container to "postgres",
-- **e "POSTGRES_USER=postgres"**: This flag sets the environment variable **POSTGRES_USER** within the container to "postgres",It indicate the username.
-- **e "POSTGRES_PASSWORD=redhat"**: This flag sets the environment variable **POSTGRES_PASSWORD** within the container to "redhat", which is the password for the PostgreSQL user.
-- **v/home/yogendra/shiksha_portal/crunchy/postgres/data:/var/lib/postgresql/data**: This allows you to persist the PostgreSQL data outside the container, ensuring that the data is retained even if the container is removed.
+- **--name postgres_crunchy**: This flag assigns the name "postgres_crunchy" to the container.
+- **-e "POSTGRES_DB=postgres"**: This flag sets the environment variable **POSTGRES_DB** within the container to "postgres",
+- **-e "POSTGRES_USER=postgres"**: This flag sets the environment variable **POSTGRES_USER** within the container to "postgres",It indicate the username.
+- **-e "POSTGRES_PASSWORD=redhat"**: This flag sets the environment variable **POSTGRES_PASSWORD** within the container to "redhat", which is the password for the PostgreSQL user.
+- **-v /home/yogendra/shiksha_portal/crunchy/postgres/data:/var/lib/postgresql/data**: This allows you to persist the PostgreSQL data outside the container, ensuring that the data is retained even if the container is removed.
 - **docker.io/postgres:12**: This specifies the Docker image to use for the container. the container will be based on the "postgres:12" image from Docker Hub.
 
 **3. Do Changes in configuration file:**
@@ -86,7 +86,7 @@ podman run -itd --pod crunchy-postgres --name crunchy -e EXPORTER_PG_PASSWORD=re
 podman cp crunchy:/opt/cpm/conf/pg12/setup.sql .
 ```
 
-NOTE:- **setu.sql** Creates **ccp_monitoring** role with all necessary grants. Creates all necessary database objects (functions, tables, etc) required for monitoring.
+NOTE:- **setup.sql** Creates **ccp_monitoring** role with all necessary grants. Creates all necessary database objects (functions, tables, etc) required for monitoring.
 
 This will copy the **setup.sql** file from the container to the directory where you executed the command.
 
@@ -119,7 +119,7 @@ This command is used to enable the **pg_stat_statements** extension in the Postg
 **10. Create password for user ccp_monitoring:**
 
 ```bash
-root@crunchy-postgres:/var/lib/postgresql# psql -h 127.0.0.1 -U postgres -d postgres
+psql -h 127.0.0.1 -U postgres -d postgres
 ```
 
 Here We will login in postgres database and then Create password for user ccp_monitoring and also will create database name yogendra
@@ -139,13 +139,13 @@ podman run -itd --pod crunchy-postgres --name crunchy -e EXPORTER_PG_PASSWORD=re
 ```
 
 - **podman run**: This command is used to run a new container.
-- **itd**: These flags are used together for interactive (console input/output enabled), detached (background) mode.
-- **-pod crunchy-postgres**: This flag specifies that the container should be part of the existing "crunchy-postgres" pod.
-- **-name crunchy**: This flag assigns the name "crunchy" to the container.
-- **e EXPORTER_PG_PASSWORD=redhat**: This flag sets the environment variable **EXPORTER_PG_PASSWORD** within the container to "redhat". This likely represents the password required for PostgreSQL Exporter to connect to the PostgreSQL instance.
-- **e EXPORTER_PG_HOST=127.0.0.1**: This flag sets the environment variable **EXPORTER_PG_HOST** within the container to "127.0.0.1", indicating the host where the PostgreSQL database is located.
-- **e EXPORTER_PG_USER=ccp_monitoring**: This flag sets the environment variable **EXPORTER_PG_USER** within the container to "ccp_monitoring", which is likely the username used by the PostgreSQL Exporter to connect to the PostgreSQL instance.
-- **e DATA_SOURCE_NAME=...**: This flag sets the **DATA_SOURCE_NAME** environment variable. It specifies the connection details for the PostgreSQL Exporter to use when connecting to the PostgreSQL database. The provided URL includes the username, password, host, port, database name, and SSL mode settings.
+- **-itd**: These flags are used together for interactive (console input/output enabled), detached (background) mode.
+- **--pod crunchy-postgres**: This flag specifies that the container should be part of the existing "crunchy-postgres" pod.
+- **--name crunchy**: This flag assigns the name "crunchy" to the container.
+- **-e EXPORTER_PG_PASSWORD=redhat**: This flag sets the environment variable **EXPORTER_PG_PASSWORD** within the container to "redhat". This likely represents the password required for PostgreSQL Exporter to connect to the PostgreSQL instance.
+- **-e EXPORTER_PG_HOST=127.0.0.1**: This flag sets the environment variable **EXPORTER_PG_HOST** within the container to "127.0.0.1", indicating the host where the PostgreSQL database is located.
+- **-e EXPORTER_PG_USER=ccp_monitoring**: This flag sets the environment variable **EXPORTER_PG_USER** within the container to "ccp_monitoring", which is likely the username used by the PostgreSQL Exporter to connect to the PostgreSQL instance.
+- **-e DATA_SOURCE_NAME=...**: This flag sets the **DATA_SOURCE_NAME** environment variable. It specifies the connection details for the PostgreSQL Exporter to use when connecting to the PostgreSQL database. The provided URL includes the username, password, host, port, database name, and SSL mode settings.
 - **83a59722eb87**: This represents the ID of the container image that you want to run as a container.
 
 **12. Check metrics:**
@@ -175,8 +175,7 @@ hit on browser: **http://localhost:9090/**
 **14. Create Grafana Container:**
 
 ```bash
-**podman run -itd --pod crunchy-postgres --name grafana_crunchy
-docker.io/grafana/grafana**
+podman run -itd --pod crunchy-postgres --name grafana_crunchy docker.io/grafana/grafana
 ```
 
 Hit on browser:
@@ -190,10 +189,6 @@ Select the prometheus as a datasource and import the dashboard.
 ![](image1.png)
 
 **Test cases list**
-
-| SNO | Component/Tool Name | Test case | Test Count | Test Cases | Expected Result | Test Passed [PASS/FAIL] | Remarks |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-
 Note : NA
 
 **Reference link**
